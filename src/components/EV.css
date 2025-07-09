@@ -1,48 +1,38 @@
-/* Container setup */
-.counter-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
+/* App.css */
 
-/* Counter box */
-.counter-box {
-  background: white;
-  padding: 40px 50px;
-  border-radius: 20px;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+.container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   text-align: center;
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* Count display */
-.count-display {
-  font-size: 4rem;
+.heading {
   color: #333;
   margin-bottom: 20px;
 }
 
-/* Button styles */
-.counter-button {
-  padding: 12px 30px;
-  font-size: 1.2rem;
-  color: white;
-  background-color: #4a90e2;
-  border: none;
+.input-box {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #ddd;
   border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin: 1rem;
+  font-size: 16px;
+  transition: 0.3s ease;
 }
 
-.counter-button:hover {
-  background-color: #357abd;
-  transform: scale(1.05);
+.input-box:focus {
+  border-color: #6a67ce;
+  outline: none;
+  box-shadow: 0 0 8px rgba(106, 103, 206, 0.3);
 }
 
-.counter-button:active {
-  transform: scale(0.98);
+.display-text {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #444;
 }
