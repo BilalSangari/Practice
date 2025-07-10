@@ -82,3 +82,16 @@ button{
   color: red;
   font-size: large;
 }
+
+/* Light mode (default) */
+body {
+  background-color: #f0f0f0;
+  color: #222;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+/* Dark mode */
+body.dark-mode {
+  background-color: #121212;
+  color: #eee;
+}
