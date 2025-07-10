@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Toggle.css";
+import { IoMdSwitch } from "react-icons/io";
+import { GiCamelHead } from "react-icons/gi";
 
 export const ToggleSwitch = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -19,6 +21,12 @@ export const ToggleSwitch = () => {
   };
 
   return (
+    <>
+    <div className="top">
+    <h1>Toggle Switch</h1>
+    <IoMdSwitch style={{fontSize: "32px"}}/>
+    <GiCamelHead style={{fontSize: "32px"}}/>
+    </div>
     <div className="toggle-container">
       <label className="switch">
         <input type="checkbox" checked={isDarkMode} onChange={toggleHandler} />
@@ -30,5 +38,6 @@ export const ToggleSwitch = () => {
         {isDarkMode ? "Dark Mode" : "Light Mode"}
       </p>
     </div>
+    </>
   );
 };
