@@ -57,6 +57,7 @@ a {
   --para-color: #504e4d;
   --bnt-hover-bg-color: #003b99;
   --bnt-box-shadow: rgba(100, 100, 11, 0.2) 0px 7px 29px 0px;
+  --primary-color: #000000;
 }
 
 .container {

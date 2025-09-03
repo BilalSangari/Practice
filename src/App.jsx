@@ -1,11 +1,8 @@
-// import "./components/EV.css";
-// import { Liftingstate } from "./components/liftingstate.jsx";
-import { ToggleSwitch } from "./projects/ToggleSwitch/Toggle Switch.jsx";
+import { Todo } from "./projects/Todo/Todo";
 
 const App = () => {
   return <>
-    <ToggleSwitch />
-    {/* <Liftingstate /> */}
+    <Todo />
   </>;
 };
 
