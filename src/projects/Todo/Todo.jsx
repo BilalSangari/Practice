@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import "./Todo.css"
-
+import { MdCheckCircle ,MdDeleteForever } from "react-icons/md";
+import { TodoForm } from "./TodoForm";
 
 export const Todo = () => {
-    const [inputValue,setInputValue] = useState("");
+   
     const [task, setTask] = useState([]);
     const [dateTime, setDateTime] = useState("");
 
-    const handleInputChange = (value) => {
-        setInputValue(value)
-    }
+  
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -55,24 +54,16 @@ export const Todo = () => {
                 <h1>To Do List</h1>
                 <h2 className="date-time">{dateTime}</h2>
             </header>
-            <section className="form">
-                <form onSubmit={handleFormSubmit}>
-                <div>
-                    <input type="text" className="todo-input" autoComplete="off" value={inputValue} onChange={(event) => handleInputChange(event.target.value)} />
-                </div>
-                <div>
-                    <button type="submit" className="todo-btn">Add Task</button>
-                </div>
-                </form>
-            </section>
+            <TodoForm />
+
             <section className="myUnOrdList">
                 <ul>
                     {task.map((curTask,index) => {
                         return(
                             <li key={index} className="todo-item">
                                 <span>{curTask}</span>
-                                <button className="check-btn"><h6>A</h6></button>
-                                <button className="delete-btn" onClick={() => handleDeleteTodo(curTask)}><h5>D</h5></button>
+                                <button className="check-btn"><h6><MdCheckCircle /></h6></button>
+                                <button className="delete-btn" onClick={() => handleDeleteTodo(curTask)}><h6><MdDeleteForever /></h6></button>
                             </li>
                         )
                     })}
