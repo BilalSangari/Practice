@@ -4,25 +4,18 @@ import { MdCheckCircle ,MdDeleteForever } from "react-icons/md";
 import { TodoForm } from "./TodoForm";
 
 export const Todo = () => {
-   
     const [task, setTask] = useState([]);
     const [dateTime, setDateTime] = useState("");
 
-  
-
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-
+    // ✅ handle form submit here
+    const handleFormSubmit = (inputValue) => {
         if (!inputValue) return;
 
         if (task.includes(inputValue)) {
-            setInputValue("")
             return;
         }
 
         setTask((prevTask) => [...prevTask, inputValue]);
-
-        setInputValue("")
     };
 
     useEffect(() => {
@@ -30,22 +23,19 @@ export const Todo = () => {
             const now = new Date();
             const formattedDate = now.toLocaleDateString();
             const formattedTime = now.toLocaleTimeString();
-            setDateTime(`${formattedDate} - ${formattedTime}`)
-        }, 1000)
+            setDateTime(`${formattedDate} - ${formattedTime}`);
+        }, 1000);
         
         return () => clearInterval(interval);
-    },[]);
+    }, []);
 
     const handleDeleteTodo = (value) => {
-        console.log(task);
-        console.log(value)
         const updatedTask = task.filter((curTask) => curTask !== value);
         setTask(updatedTask);
     }
     
-        //Todo Clear Button
     const handleClearButton = () => {
-        setTask([])
+        setTask([]);
     }
 
     return (
@@ -54,7 +44,9 @@ export const Todo = () => {
                 <h1>To Do List</h1>
                 <h2 className="date-time">{dateTime}</h2>
             </header>
-            <TodoForm />
+
+            {/* ✅ Pass the submit function down */}
+            <TodoForm onFormSubmit={handleFormSubmit} />
 
             <section className="myUnOrdList">
                 <ul>
@@ -63,7 +55,12 @@ export const Todo = () => {
                             <li key={index} className="todo-item">
                                 <span>{curTask}</span>
                                 <button className="check-btn"><h6><MdCheckCircle /></h6></button>
-                                <button className="delete-btn" onClick={() => handleDeleteTodo(curTask)}><h6><MdDeleteForever /></h6></button>
+                                <button 
+                                    className="delete-btn" 
+                                    onClick={() => handleDeleteTodo(curTask)}
+                                >
+                                    <h6><MdDeleteForever /></h6>
+                                </button>
                             </li>
                         )
                     })}
