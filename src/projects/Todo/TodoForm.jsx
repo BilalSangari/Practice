@@ -30,5 +30,6 @@ export const TodoForm = ({ onFormSubmit }) => {
                 </div>
             </form>
         </section>
+        
     )
 }

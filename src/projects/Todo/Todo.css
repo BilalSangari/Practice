@@ -194,3 +194,43 @@ li span {
 .clear-btn:hover {
   background-color: #8d1407;
 }
+
+.todo-item.completed span {
+  text-decoration: line-through;
+  opacity: 0.6;  /* makes it look dimmed */
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.filter-bar button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1.4rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  background-color: #2c3e50;
+  color: white;
+  transition: 0.2s ease;
+}
+
+.filter-bar button:hover {
+  background-color: #34495e;
+}
+
+.filter-bar .active-filter {
+  background-color: #f1c40f;
+  color: black;
+  font-weight: bold;
+}
+
+.task-count {
+  margin-right: auto;
+  font-size: 1.4rem;
+  color: #ecf0f1;
+}
+
