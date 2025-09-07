@@ -1,228 +1,202 @@
-/* section {
-  width: 100%;
-  margin-top: 10rem;
+/* =========================
+   Global Styles
+========================= */
+body {
+  font-family: "Inter", "Poppins", sans-serif;
+  background: linear-gradient(135deg, #141e30, #243b55);
+  min-height: 100vh;
+  margin: 0;
   display: flex;
   justify-content: center;
-} */
-
-.todo-container {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding-top: 3%;
-  background-image: linear-gradient(100deg, #001214, #001f29);
-  color: white;
-  transition: 0.3s linear;
-  overflow: hidden;
-}
-
-.header,
-.form,
-.datetime {
-  margin: 0 1rem;
-  min-height: 10vh;
-  width: 100%;
-}
-
-.header {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  font-size: 3rem;
-  min-height: 25vh;
-  width: 100%;
-}
-
-section h1 {
+  align-items: flex-start;
+  padding: 2rem;
   color: #fff;
-  font-size: 4.8rem;
-  text-align: center;
+}
+
+/* =========================
+   Todo Container
+========================= */
+.todo-container {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 3rem;
+  padding: 2.5rem;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 25px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.25s ease-in-out;
+}
+
+.todo-container:hover {
+  transform: translateY(-6px);
+}
+
+/* =========================
+   Header
+========================= */
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 0.6rem;
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .date-time {
-  font-size: 2.4rem;
-  text-align: center;
-  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #bfc9d9;
 }
 
+/* =========================
+   Form (Input & Button)
+========================= */
 form {
   display: flex;
-  font-size: 1.7rem;
   justify-content: center;
-  margin: 15px 0;
-  padding: 0.8rem;
+  margin: 1.5rem 0;
   width: 100%;
 }
 
 form input {
-  padding: 10px;
-  font-size: 1.8rem;
-  letter-spacing: 0.1rem;
+  flex: 1;
+  padding: 1rem 1.3rem;
+  font-size: 1rem;
   border: none;
+  border-radius: 15px 0 0 15px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
   outline: none;
-  /* border-radius: 15; */
-  border-top-left-radius: 17px;
-  border-bottom-left-radius: 17px;
-  max-width: 500px;
-  transition: background-color 200ms ease-in-out;
-  width: 100%;
-  background-color: #f2f3f4;
-  color: var(--primary-color);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
 }
 
-form input:hover {
-  cursor: text;
-}
-
-form input::placeholder {
-  color: white;
-  opacity: 0.7;
-}
-
-button {
-  border: none;
-  outline: none;
-  transition: box-shadow 200ms ease, background-color 200ms ease-in-out;
-  background-color: #2c3e50;
-  color: rgb(0, 0, 0);
-}
-
-form button:hover {
-  cursor: pointer;
-  background-color: #f1c40f;
+form input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 12px #6c5ce7;
 }
 
 form button {
-  padding: 10.8px;
-  font-size: 17px;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-  min-width: 100px;
-  background-color: #5dade2;
-  color: var(--secondary-color);
+  padding: 0 1.6rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #6c5ce7, #00cec9);
+  color: #fff;
+  border: none;
+  border-radius: 0 15px 15px 0;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.3s ease;
 }
 
-span {
-  margin-right: 3.2rem;
+form button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #5a4cc7, #00b8a3);
 }
 
+/* =========================
+   Task List
+========================= */
 .myUnOrdList {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 1200px;
-}
-
-.todo-list {
-  min-width: 25%;
-
-  /* To remove the bullets of unordered list */
-  list-style: none;
+  width: 100%;
 }
 
 .todo-item {
-  margin: 2.4rem;
-  /*word-wrap: break-word;
-    */ /*flex-wrap: wrap;
-    */
-  font-size: 20px;
-  color: #1c2833;
-  border-radius: 30px;
-  transition: background-color 200ms ease-in-out;
-  background-color: #f2f3f4;
-  min-width: 35rem;
-  max-width: 40rem;
-  padding: 1.6rem 3rem;
-  display: grid;
-  grid-template-columns: 1fr 0.3fr 0.3fr;
-  justify-content: start;
-  gap: 1.6rem;
-  /*align-items: center;
-    */ /*wrapsthelinks*/
-  overflow-wrap: anywhere;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 15px;
+  padding: 1rem 1.3rem;
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, background 0.3s ease;
 }
 
-li span {
-  max-width: 20rem;
-  color: #1c2833;
+.todo-item:hover {
+  transform: scale(1.02);
+  background: rgba(255, 255, 255, 0.18);
 }
 
+.todo-item span {
+  flex: 1;
+  margin-right: 1rem;
+  word-break: break-word;
+  transition: color 0.3s ease;
+}
+
+.checkList {
+  text-decoration: line-through;
+  color: #aaa;
+}
+
+.notCheckList {
+  text-decoration: none;
+}
+
+/* =========================
+   Action Buttons
+========================= */
 .check-btn,
 .delete-btn {
-  font-size: 3rem;
+  border: none;
+  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
   cursor: pointer;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 80%;
-  margin: 0 5px;
-  background-color: #fff;
-  color: rgb(0, 0, 0);
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: transform 0.2s ease, background 0.3s ease;
 }
 
 .check-btn {
+  background: rgba(46, 204, 113, 0.2);
+  color: #2ecc71;
+}
+
+.check-btn:hover {
+  background: #2ecc71;
   color: #fff;
-  background-color: #2ecc71;
+  transform: scale(1.1);
 }
 
 .delete-btn {
-  color: #fff;
-  background-color: #e74c3c;
+  background: rgba(231, 76, 60, 0.2);
+  color: #e74c3c;
 }
 
+.delete-btn:hover {
+  background: #e74c3c;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* =========================
+   Clear Button
+========================= */
 .clear-btn {
-  background-color: #e74c3c;
-  font-size: 1.6rem;
-  padding: 1rem 2.2rem;
-  border-radius: 0.3rem;
-  -webkit-border-radius: 0.3rem;
-  -moz-border-radius: 0.3rem;
-  -ms-border-radius: 0.3rem;
-  -o-border-radius: 0.3rem;
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #e74c3c, #ff7675);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.9rem 1.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.25s ease, background 0.3s ease;
 }
 
 .clear-btn:hover {
-  background-color: #8d1407;
+  background: linear-gradient(135deg, #c0392b, #e17055);
+  transform: translateY(-3px);
 }
-
-.todo-item.completed span {
-  text-decoration: line-through;
-  opacity: 0.6;  /* makes it look dimmed */
-}
-
-.filter-bar {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.filter-bar button {
-  padding: 0.6rem 1.2rem;
-  font-size: 1.4rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-  background-color: #2c3e50;
-  color: white;
-  transition: 0.2s ease;
-}
-
-.filter-bar button:hover {
-  background-color: #34495e;
-}
-
-.filter-bar .active-filter {
-  background-color: #f1c40f;
-  color: black;
-  font-weight: bold;
-}
-
-.task-count {
-  margin-right: auto;
-  font-size: 1.4rem;
-  color: #ecf0f1;
-}
-
