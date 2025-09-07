@@ -1,202 +1,293 @@
-/* =========================
-   Global Styles
-========================= */
-body {
-  font-family: "Inter", "Poppins", sans-serif;
-  background: linear-gradient(135deg, #141e30, #243b55);
-  min-height: 100vh;
-  margin: 0;
+/* === Base Layout === */
+.todo-container {
+  align-items: center;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  min-height: 100vh;
   padding: 2rem;
+  background-image: linear-gradient(120deg, #fdfbfb, #ebedee);
+  color: #222;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.theme-dark .todo-container {
+  background-image: linear-gradient(120deg, #001214, #001f29);
+  color: #f5f5f5;
+}
+
+header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 20vh;
+  width: 100%;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  font-family: "Poppins", sans-serif;
+  color: #222;
+}
+
+.theme-dark header h1 {
   color: #fff;
 }
 
-/* =========================
-   Todo Container
-========================= */
-.todo-container {
+/* === Author Name === */
+.author {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  transition: color 0.3s ease;
+  color: #222; /* blackish in light mode */
+}
+
+.theme-dark .author {
+  color: #f5f5f5; /* whiteish in dark mode */
+}
+
+/* === Date & Time === */
+.date-time {
+  font-size: 1.6rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  margin-top: 0.6rem;
+  color: #333;
+}
+.theme-dark .date-time {
+  color: #ddd;
+}
+
+/* === Toolbar (Chips + Progress) === */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 600px;
-  margin-top: 3rem;
-  padding: 2.5rem;
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 25px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  margin: 1.5rem 0;
+}
+
+.chips {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.25s ease-in-out;
+  gap: 0.8rem;
 }
 
-.todo-container:hover {
-  transform: translateY(-6px);
-}
-
-/* =========================
-   Header
-========================= */
-header h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  margin-bottom: 0.6rem;
-  background: linear-gradient(135deg, #6c5ce7, #00cec9);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.date-time {
-  font-size: 1rem;
+.chip {
+  font-size: 1.4rem;
   font-weight: 500;
-  color: #bfc9d9;
+  font-family: "Poppins", sans-serif;
+  padding: 0.4rem 1.2rem;
+  border-radius: 999px;
+  background: #e0e0e0;
+  color: #222;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-/* =========================
-   Form (Input & Button)
-========================= */
+.chip.active {
+  background: #3498db;
+  color: #fff;
+  font-weight: 600;
+}
+
+.theme-dark .chip {
+  background: #444;
+  color: #eee;
+}
+.theme-dark .chip.active {
+  background: #3498db;
+  color: #fff;
+}
+
+/* Theme Button (last chip) */
+.chip:last-child {
+  background: #8e44ad;
+  color: #fff;
+}
+.chip:last-child:hover {
+  background: #732d91;
+}
+
+/* === Progress Circle === */
+.count {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
+}
+
+.progress {
+  --size: 32px;
+  --value: 0%;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  border: 3px solid #ddd;
+  position: relative;
+}
+.progress span {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid #3498db;
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%);
+  transform: rotate(calc(var(--value) * 3.6deg));
+  transition: transform 0.4s ease;
+}
+
+/* === Form (Input + Button) === */
 form {
   display: flex;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   width: 100%;
+  max-width: 600px;
 }
 
 form input {
   flex: 1;
-  padding: 1rem 1.3rem;
-  font-size: 1rem;
+  padding: 12px 15px;
+  font-size: 1.6rem;
+  font-family: "Poppins", sans-serif;
   border: none;
-  border-radius: 15px 0 0 15px;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
   outline: none;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
+  border-radius: 8px 0 0 8px;
+  background: #f2f3f4;
+  color: #222;
 }
 
-form input:focus {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 12px #6c5ce7;
+.theme-dark form input {
+  background: #333;
+  color: #fff;
 }
 
 form button {
-  padding: 0 1.6rem;
-  font-size: 1rem;
-  font-weight: 600;
-  background: linear-gradient(135deg, #6c5ce7, #00cec9);
-  color: #fff;
+  padding: 12px 20px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
   border: none;
-  border-radius: 0 15px 15px 0;
+  border-radius: 0 8px 8px 0;
+  background: #3498db;
+  color: #fff;
   cursor: pointer;
-  transition: transform 0.25s ease, background 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 form button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(135deg, #5a4cc7, #00b8a3);
+  background: #2980b9;
 }
 
-/* =========================
-   Task List
-========================= */
+/* === Todo List === */
 .myUnOrdList {
-  width: 100%;
-}
-
-.todo-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border-radius: 15px;
-  padding: 1rem 1.3rem;
-  margin-bottom: 1rem;
-  font-size: 1.05rem;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s ease, background 0.3s ease;
-}
-
-.todo-item:hover {
-  transform: scale(1.02);
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.todo-item span {
-  flex: 1;
-  margin-right: 1rem;
-  word-break: break-word;
-  transition: color 0.3s ease;
-}
-
-.checkList {
-  text-decoration: line-through;
-  color: #aaa;
-}
-
-.notCheckList {
-  text-decoration: none;
-}
-
-/* =========================
-   Action Buttons
-========================= */
-.check-btn,
-.delete-btn {
-  border: none;
-  border-radius: 12px;
-  width: 40px;
-  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.3rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+  width: 100%;
+  max-width: 600px;
+  padding: 0;
+}
+
+.todo-item {
+  margin: 1rem 0;
+  font-size: 1.6rem;
+  color: #1c2833;
+  border-radius: 12px;
+  background-color: #f2f3f4;
+  padding: 1rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.todo-item:hover {
+  transform: translateY(-3px);
+  background: #e8e8e8;
+}
+
+.theme-dark .todo-item {
+  background: #2b2b2b;
+  color: #eee;
+}
+.theme-dark .todo-item:hover {
+  background: #3a3a3a;
+}
+
+.todo-item.completed span {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Todo text */
+.todo-item span {
+  font-size: 1.6rem;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+/* Buttons inside todos */
+.icon-btn {
+  font-size: 2.2rem;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.3s ease;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
 }
 
 .check-btn {
-  background: rgba(46, 204, 113, 0.2);
-  color: #2ecc71;
-}
-
-.check-btn:hover {
   background: #2ecc71;
   color: #fff;
-  transform: scale(1.1);
+}
+.check-btn.active {
+  background: #27ae60;
 }
 
 .delete-btn {
-  background: rgba(231, 76, 60, 0.2);
-  color: #e74c3c;
-}
-
-.delete-btn:hover {
   background: #e74c3c;
   color: #fff;
-  transform: scale(1.1);
+}
+.delete-btn:hover {
+  background: #c0392b;
 }
 
-/* =========================
-   Clear Button
-========================= */
+/* === Clear Button === */
 .clear-btn {
-  margin-top: 1.5rem;
-  background: linear-gradient(135deg, #e74c3c, #ff7675);
-  color: #fff;
-  font-weight: 700;
-  padding: 0.9rem 1.6rem;
-  font-size: 1rem;
+  background-color: #e74c3c;
+  font-size: 1.6rem;
+  padding: 1rem 2rem;
+  border-radius: 8px;
   border: none;
-  border-radius: 12px;
+  margin-top: 1.5rem;
+  color: #fff;
   cursor: pointer;
-  transition: transform 0.25s ease, background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
-
 .clear-btn:hover {
-  background: linear-gradient(135deg, #c0392b, #e17055);
-  transform: translateY(-3px);
+  background-color: #8d1407;
+  transform: translateY(-2px);
 }

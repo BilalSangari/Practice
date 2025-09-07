@@ -1,104 +1,124 @@
 import { useState } from "react";
-import "./Todo.css";
 import { TodoForm } from "./TodoForm";
 import { TodoList } from "./TodoList";
 import { TodoDate } from "./TodoDate";
+import "./Todo.css";
 
 export const Todo = () => {
+  const [inputValue, setInputValue] = useState("");
   const [task, setTask] = useState([]);
-  const [filter, setFilter] = useState("all"); // 🔹 track current filter
+  const [filter, setFilter] = useState("all");
 
-  // ✅ handle form submit here
-  const handleFormSubmit = (inputValue) => {
-    if (!inputValue) return;
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (!inputValue.trim()) return;
 
-    // Prevent duplicates
-    if (task.some((t) => t.text === inputValue)) return;
-
-    // Add as object with completed = false
-    setTask((prevTask) => [...prevTask, { text: inputValue, completed: false }]);
+    setTask([...task, { text: inputValue.trim(), completed: false }]);
+    setInputValue("");
   };
 
-  const handleDeleteTodo = (value) => {
-    const updatedTask = task.filter((curTask) => curTask.text !== value);
-    setTask(updatedTask);
+  const handleDeleteTodo = (text) => {
+    setTask(task.filter((t) => t.text !== text));
   };
 
-  const handleClearButton = () => {
+  const handleToggleComplete = (text) => {
+    setTask(
+      task.map((t) =>
+        t.text === text ? { ...t, completed: !t.completed } : t
+      )
+    );
+  };
+
+  const handleClearAll = () => {
     setTask([]);
   };
 
-  const handleToggleComplete = (value) => {
-    const updatedTask = task.map((curTask) =>
-      curTask.text === value ? { ...curTask, completed: !curTask.completed } : curTask
-    );
-    setTask(updatedTask);
-  };
-
-  // ✅ count remaining active tasks
   const activeTasksCount = task.filter((t) => !t.completed).length;
 
+  const filteredTasks = task.filter((t) => {
+    if (filter === "all") return true;
+    if (filter === "active") return !t.completed;
+    if (filter === "completed") return t.completed;
+    return true;
+  });
+
   return (
-    <section className="todo-container">
+    <div className="todo-container">
       <header>
         <h1>To Do List</h1>
-        <TodoDate />
+         <h3 className="author">by Masihullah Sangari</h3>
+        <div style={{ display: "flex", gap: ".5rem", alignItems: "center", justifySelf: "end" }}>
+          <TodoDate />
+          <button
+            className="chip"
+            onClick={() => document.body.classList.toggle("theme-dark")}
+          >
+            Theme
+          </button>
+        </div>
       </header>
 
-      {/* ✅ Input form */}
-      <TodoForm onFormSubmit={handleFormSubmit} />
+      {/* toolbar */}
+      <div className="toolbar">
+        <div className="chips">
+          <button
+            className={`chip ${filter === "all" ? "active" : ""}`}
+            onClick={() => setFilter("all")}
+          >
+            All
+          </button>
+          <button
+            className={`chip ${filter === "active" ? "active" : ""}`}
+            onClick={() => setFilter("active")}
+          >
+            Active
+          </button>
+          <button
+            className={`chip ${filter === "completed" ? "active" : ""}`}
+            onClick={() => setFilter("completed")}
+          >
+            Completed
+          </button>
+        </div>
 
-      {/* ✅ Filter bar with task count */}
-      <div className="filter-bar">
-        <span className="task-count">{activeTasksCount} Active tasks left</span>
-        <button
-          className={filter === "all" ? "active-filter" : ""}
-          onClick={() => setFilter("all")}
-        >
-          All
-        </button>
-        <button
-          className={filter === "active" ? "active-filter" : ""}
-          onClick={() => setFilter("active")}
-        >
-          Active
-        </button>
-        <button
-          className={filter === "completed" ? "active-filter" : ""}
-          onClick={() => setFilter("completed")}
-        >
-          Completed
-        </button>
+        <div className="count">
+          <span>{activeTasksCount} active</span>
+          <div
+            className="progress"
+            style={{
+              "--value": `${
+                task.length
+                  ? (task.filter((t) => t.completed).length / task.length) * 100
+                  : 0
+              }%`,
+            }}
+          >
+            <span />
+          </div>
+        </div>
       </div>
 
-      {/* ✅ List */}
-      <section className="myUnOrdList">
-        <ul>
-          {task
-            .filter((t) => {
-              if (filter === "active") return !t.completed;
-              if (filter === "completed") return t.completed;
-              return true; // "all"
-            })
-            .slice()
-            .sort((a, b) => a.completed - b.completed)
-            .map((curTask, index) => (
-              <TodoList
-                key={index}
-                data={curTask}
-                onHandleDeleteTodo={handleDeleteTodo}
-                onToggleComplete={handleToggleComplete}
-              />
-            ))}
-        </ul>
-      </section>
+      <div className="form">
+        <TodoForm
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          handleFormSubmit={handleFormSubmit}
+        />
+      </div>
 
-      {/* ✅ Clear button */}
-      <section>
-        <button className="clear-btn" onClick={handleClearButton}>
+      <div className="myUnOrdList">
+        <TodoList
+          tasks={filteredTasks}
+          onHandleDeleteTodo={handleDeleteTodo}
+          onToggleComplete={handleToggleComplete}
+        />
+      </div>
+
+      {task.length > 0 && (
+        <button className="clear-btn" onClick={handleClearAll}>
           Clear All
         </button>
-      </section>
-    </section>
+      )}
+    </div>
   );
 };
