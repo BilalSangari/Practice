@@ -172,14 +172,6 @@ li span {
   background-color: #e74c3c;
 }
 
-.checkList {
-  text-decoration: line-through;
-}
-
-.notCheckList {
-  text-decoration: none;
-}
-
 .clear-btn {
   background-color: #e74c3c;
   font-size: 1.6rem;
