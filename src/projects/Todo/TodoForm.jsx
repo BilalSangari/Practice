@@ -1,17 +1,23 @@
-export const TodoForm = ({ inputValue, setInputValue, handleFormSubmit }) => {
+import { useState } from "react";
+
+export const TodoForm = ({ onFormSubmit }) => {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onFormSubmit(inputValue);
+    setInputValue("");
+  };
+
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form onSubmit={handleSubmit}>
       <input
         type="text"
-        className="todo-input"
-        placeholder="What do you need to get done?"
-        autoComplete="off"
+        placeholder="✍️ Add a new task..."
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      <button type="submit" className="todo-btn">
-        Add Task
-      </button>
+      <button type="submit">Add</button>
     </form>
   );
 };

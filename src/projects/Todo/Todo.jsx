@@ -1,124 +1,97 @@
 import { useState } from "react";
+import "./Todo.css";
 import { TodoForm } from "./TodoForm";
 import { TodoList } from "./TodoList";
 import { TodoDate } from "./TodoDate";
-import "./Todo.css";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const Todo = () => {
-  const [inputValue, setInputValue] = useState("");
   const [task, setTask] = useState([]);
-  const [filter, setFilter] = useState("all");
+  const [theme, setTheme] = useState("light"); // ✅ theme state
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    if (!inputValue.trim()) return;
+  const handleFormSubmit = (inputValue) => {
+    if (!inputValue) return;
+    if (task.some((t) => t.text === inputValue)) return;
 
-    setTask([...task, { text: inputValue.trim(), completed: false }]);
-    setInputValue("");
+    setTask((prev) => [...prev, { text: inputValue, completed: false }]);
   };
 
-  const handleDeleteTodo = (text) => {
-    setTask(task.filter((t) => t.text !== text));
+  const handleDeleteTodo = (value) => {
+    setTask((prev) => prev.filter((curTask) => curTask.text !== value));
   };
 
-  const handleToggleComplete = (text) => {
-    setTask(
-      task.map((t) =>
-        t.text === text ? { ...t, completed: !t.completed } : t
+  const handleToggleComplete = (value) => {
+    setTask((prev) =>
+      prev.map((curTask) =>
+        curTask.text === value
+          ? { ...curTask, completed: !curTask.completed }
+          : curTask
       )
     );
   };
 
-  const handleClearAll = () => {
+  const handleClearButton = () => {
     setTask([]);
   };
 
-  const activeTasksCount = task.filter((t) => !t.completed).length;
-
-  const filteredTasks = task.filter((t) => {
-    if (filter === "all") return true;
-    if (filter === "active") return !t.completed;
-    if (filter === "completed") return t.completed;
-    return true;
-  });
+  // ✅ Toggle theme
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
 
   return (
-    <div className="todo-container">
+    <section className={`todo-container ${theme}`}>
       <header>
         <h1>To Do List</h1>
-         <h3 className="author">by Masihullah Sangari</h3>
-        <div style={{ display: "flex", gap: ".5rem", alignItems: "center", justifySelf: "end" }}>
-          <TodoDate />
-          <button
-            className="chip"
-            onClick={() => document.body.classList.toggle("theme-dark")}
-          >
-            Theme
-          </button>
-        </div>
+        <TodoDate />
+        <p className="author">By Masihullah Sangari</p>
+
+        {/* ✅ Theme Toggle Button */}
+        <motion.button
+          className="theme-toggle"
+          onClick={toggleTheme}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          {theme === "light" ? "🌙 Dark Mode" : "🌞 Light Mode"}
+        </motion.button>
       </header>
 
-      {/* toolbar */}
-      <div className="toolbar">
-        <div className="chips">
-          <button
-            className={`chip ${filter === "all" ? "active" : ""}`}
-            onClick={() => setFilter("all")}
-          >
-            All
-          </button>
-          <button
-            className={`chip ${filter === "active" ? "active" : ""}`}
-            onClick={() => setFilter("active")}
-          >
-            Active
-          </button>
-          <button
-            className={`chip ${filter === "completed" ? "active" : ""}`}
-            onClick={() => setFilter("completed")}
-          >
-            Completed
-          </button>
-        </div>
+      <TodoForm onFormSubmit={handleFormSubmit} />
 
-        <div className="count">
-          <span>{activeTasksCount} active</span>
-          <div
-            className="progress"
-            style={{
-              "--value": `${
-                task.length
-                  ? (task.filter((t) => t.completed).length / task.length) * 100
-                  : 0
-              }%`,
-            }}
-          >
-            <span />
-          </div>
-        </div>
-      </div>
-
-      <div className="form">
-        <TodoForm
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          handleFormSubmit={handleFormSubmit}
-        />
-      </div>
-
-      <div className="myUnOrdList">
-        <TodoList
-          tasks={filteredTasks}
-          onHandleDeleteTodo={handleDeleteTodo}
-          onToggleComplete={handleToggleComplete}
-        />
-      </div>
+      <section className="myUnOrdList">
+        <ul>
+          <AnimatePresence>
+            {task.map((curTask, index) => (
+              <motion.div
+                key={curTask.text}
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 80 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <TodoList
+                  index={index}
+                  data={curTask}
+                  onHandleDeleteTodo={handleDeleteTodo}
+                  onHandleToggleComplete={handleToggleComplete}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </ul>
+      </section>
 
       {task.length > 0 && (
-        <button className="clear-btn" onClick={handleClearAll}>
+        <motion.button
+          className="clear-btn"
+          onClick={handleClearButton}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
           Clear All
-        </button>
+        </motion.button>
       )}
-    </div>
+    </section>
   );
 };
