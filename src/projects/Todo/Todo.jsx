@@ -7,8 +7,8 @@ import { AnimatePresence, motion } from "framer-motion";
 
 export const Todo = () => {
   const [task, setTask] = useState([]);
-  const [theme, setTheme] = useState("light"); // ✅ theme state
 
+  // ✅ handle form submit here
   const handleFormSubmit = (inputValue) => {
     if (!inputValue) return;
     if (task.some((t) => t.text === inputValue)) return;
@@ -17,48 +17,35 @@ export const Todo = () => {
   };
 
   const handleDeleteTodo = (value) => {
-    setTask((prev) => prev.filter((curTask) => curTask.text !== value));
+    const updatedTask = task.filter((curTask) => curTask.text !== value);
+    setTask(updatedTask);
   };
 
   const handleToggleComplete = (value) => {
-    setTask((prev) =>
-      prev.map((curTask) =>
-        curTask.text === value
-          ? { ...curTask, completed: !curTask.completed }
-          : curTask
-      )
+    const updatedTask = task.map((curTask) =>
+      curTask.text === value
+        ? { ...curTask, completed: !curTask.completed }
+        : curTask
     );
+    setTask(updatedTask);
   };
 
   const handleClearButton = () => {
     setTask([]);
   };
 
-  // ✅ Toggle theme
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-
   return (
-    <section className={`todo-container ${theme}`}>
+    <section className="todo-container">
       <header>
         <h1>To Do List</h1>
         <TodoDate />
         <p className="author">By Masihullah Sangari</p>
-
-        {/* ✅ Theme Toggle Button */}
-        <motion.button
-          className="theme-toggle"
-          onClick={toggleTheme}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          {theme === "light" ? "🌙 Dark Mode" : "🌞 Light Mode"}
-        </motion.button>
       </header>
 
+      {/* ✅ Input form */}
       <TodoForm onFormSubmit={handleFormSubmit} />
 
+      {/* ✅ Todo List with animations */}
       <section className="myUnOrdList">
         <ul>
           <AnimatePresence>
@@ -82,6 +69,7 @@ export const Todo = () => {
         </ul>
       </section>
 
+      {/* ✅ Clear button */}
       {task.length > 0 && (
         <motion.button
           className="clear-btn"
