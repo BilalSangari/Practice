@@ -6,7 +6,7 @@ function Counter() {
   const [step, setStep] = useState(1);
 
   const min = 0;
-  const max = 10;
+  const max = 100;
 
   const increment = () => {
     if (count + step <= max) {
