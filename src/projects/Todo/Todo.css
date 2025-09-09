@@ -1,14 +1,20 @@
-/* ===== Base Setup ===== */
-body {
-  font-family: "Inter", "Poppins", sans-serif;
-  background: linear-gradient(135deg, #e6ebf3, #f9f9fb);
+/* ===== Global Reset ===== */
+* {
   margin: 0;
   padding: 0;
-  transition: all 0.5s ease;
+  box-sizing: border-box;
 }
 
-.theme-dark body {
+body {
+  font-family: "Inter", "Poppins", sans-serif;
+  background: linear-gradient(135deg, #dfe9f3, #ffffff);
+  min-height: 100vh;
+  transition: all 0.4s ease;
+}
+
+.theme-dark {
   background: linear-gradient(135deg, #0f0f11, #1c1c22);
+  color: #f5f5f5;
 }
 
 /* ===== Container ===== */
@@ -16,77 +22,74 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh;
-  padding: 3rem 2rem;
-  gap: 2rem;
-  transition: all 0.4s ease;
+  padding: 4rem 2rem;
+  gap: 2.5rem;
 }
 
-header {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
+/* ===== Header ===== */
 header h1 {
-  font-size: 4.2rem;
-  font-weight: 800;
-  letter-spacing: -1px;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  font-size: 4.5rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: -1.5px;
+  margin-bottom: 0.8rem;
+}
+
+.date-time {
+  font-size: 1.8rem;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 2px;
+  color: #222;
+}
+
+.theme-dark .date-time {
+  color: #eee;
 }
 
 .author {
-  font-size: 1.5rem;
-  margin-top: 0.3rem;
-  font-weight: 500;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
   color: #111;
 }
 
 .theme-dark .author {
-  color: #f9f9f9;
+  color: #f2f2f2;
 }
 
-/* ===== Date & Time ===== */
-.date-time {
-  font-size: 1.8rem;
-  margin-top: 0.5rem;
-  font-weight: 500;
-  color: #333;
-}
-
-.theme-dark .date-time {
-  color: #ccc;
-}
-
-/* ===== Toolbar Filters ===== */
+/* ===== Toolbar (All, Active, Completed, Theme) ===== */
 .toolbar {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 1rem;
-  margin: 1rem 0 2rem;
 }
 
 .chip {
-  font-size: 1.4rem;
-  padding: 0.6rem 1.6rem;
+  font-size: 1.5rem;
+  padding: 0.8rem 1.6rem;
   border-radius: 999px;
-  cursor: pointer;
-  font-weight: 600;
   border: none;
-  background: rgba(240, 240, 240, 0.8);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  color: #222;
   transition: all 0.3s ease;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1),
+              -2px -2px 8px rgba(255, 255, 255, 0.6);
 }
 
 .chip:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px) scale(1.05);
 }
 
 .chip.active {
   background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: #fff;
+  box-shadow: 0 6px 20px rgba(106, 17, 203, 0.4);
 }
 
 .theme-dark .chip {
@@ -102,68 +105,67 @@ header h1 {
 form {
   display: flex;
   justify-content: center;
-  max-width: 650px;
+  max-width: 700px;
   width: 100%;
   margin-bottom: 2rem;
 }
 
 form input {
   flex: 1;
-  padding: 16px 18px;
+  padding: 1.6rem;
   font-size: 1.6rem;
   border: none;
   outline: none;
   border-radius: 15px 0 0 15px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: inset 4px 4px 10px rgba(0, 0, 0, 0.05),
-              inset -4px -4px 10px rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
   color: #222;
   transition: all 0.3s ease;
 }
 
+form input:focus {
+  box-shadow: 0 0 12px rgba(37, 117, 252, 0.6);
+}
+
 .theme-dark form input {
   background: rgba(30, 30, 30, 0.9);
-  box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.5),
-              inset -4px -4px 8px rgba(60, 60, 60, 0.5);
-  color: #f9f9f9;
+  color: #eee;
 }
 
 form button {
-  padding: 16px 24px;
+  padding: 1.6rem 2.4rem;
   font-size: 1.6rem;
+  font-weight: 600;
   border: none;
   border-radius: 0 15px 15px 0;
   background: linear-gradient(135deg, #2575fc, #6a11cb);
   color: #fff;
-  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 form button:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(37, 117, 252, 0.5);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 117, 252, 0.4);
 }
 
 /* ===== Todo List ===== */
 ul {
   list-style: none;
-  padding: 0;
-  margin: 0;
   width: 100%;
-  max-width: 650px;
+  max-width: 700px;
 }
 
 .todo-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border-radius: 20px;
-  padding: 1.5rem 2rem;
+  padding: 1.6rem 2rem;
   margin: 1rem 0;
-  font-size: 1.7rem;
+  font-size: 1.9rem;
   font-weight: 500;
   color: #222;
   box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.08),
@@ -172,34 +174,31 @@ ul {
 }
 
 .todo-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 10px 10px 24px rgba(0, 0, 0, 0.12),
-              -8px -8px 20px rgba(255, 255, 255, 0.6);
+  transform: translateY(-3px) scale(1.02);
 }
 
 .theme-dark .todo-item {
   background: rgba(25, 25, 25, 0.8);
   color: #eee;
-  box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5),
-              -4px -4px 15px rgba(40, 40, 40, 0.8);
 }
 
 .todo-item.completed span {
   text-decoration: line-through;
   opacity: 0.5;
+  font-style: italic;
 }
 
-/* ===== Buttons inside Todos ===== */
+/* ===== Todo Buttons ===== */
 .icon-btn {
   border: none;
   cursor: pointer;
   border-radius: 50%;
-  padding: 0.7rem;
+  padding: 0.8rem;
   font-size: 2.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .icon-btn:hover {
@@ -209,35 +208,32 @@ ul {
 .check-btn {
   background: linear-gradient(135deg, #2ecc71, #27ae60);
   color: #fff;
-  margin-right: 0.8rem;
-}
-.check-btn.active {
-  background: linear-gradient(135deg, #27ae60, #1e8449);
 }
 
 .delete-btn {
   background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: #fff;
 }
+
 .delete-btn:hover {
   box-shadow: 0 6px 20px rgba(231, 76, 60, 0.5);
 }
 
-/* ===== Clear Button ===== */
+/* ===== Clear All Button ===== */
 .clear-btn {
   background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 600;
   padding: 1.2rem 2.4rem;
   border-radius: 15px;
   border: none;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   cursor: pointer;
   color: #fff;
   transition: all 0.3s ease;
 }
 
 .clear-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 65, 108, 0.5);
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 65, 108, 0.4);
 }
