@@ -1,10 +1,8 @@
-import Counter from "./components/hooks/useState/Counter";
-// import { Todo } from "./projects/Todo/Todo";
+import RegistrationForm from "./components/hooks/useState/RegistrationForm";
 
 const App = () => {
   return <>
-    {/* <Todo /> */}
-    <Counter />
+    <RegistrationForm />
   </>;
 };
 
