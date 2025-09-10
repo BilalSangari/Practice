@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./RegistrationForm.css";
 
 export default function RegistrationForm() {
   const [formData, setFormData] = useState({
@@ -30,14 +31,11 @@ export default function RegistrationForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Registration Form
-        </h2>
+    <div className="form-container">
+      <div className="form-box">
+        <h2 className="form-title">Registration Form</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
+        <form onSubmit={handleSubmit} className="form">
           <input
             type="text"
             name="name"
@@ -45,10 +43,9 @@ export default function RegistrationForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-input"
           />
 
-          {/* Email */}
           <input
             type="email"
             name="email"
@@ -56,10 +53,9 @@ export default function RegistrationForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-input"
           />
 
-          {/* Number */}
           <input
             type="number"
             name="number"
@@ -67,10 +63,9 @@ export default function RegistrationForm() {
             value={formData.number}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-input"
           />
 
-          {/* Password */}
           <input
             type="password"
             name="password"
@@ -78,10 +73,9 @@ export default function RegistrationForm() {
             value={formData.password}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-input"
           />
 
-          {/* Confirm Password */}
           <input
             type="password"
             name="confirmPassword"
@@ -89,14 +83,10 @@ export default function RegistrationForm() {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            className="form-input"
           />
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-          >
+          <button type="submit" className="form-button">
             Register
           </button>
         </form>
