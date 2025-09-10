@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./RegistrationForm.css";
 
 export default function RegistrationForm() {
@@ -11,51 +11,55 @@ export default function RegistrationForm() {
   });
 
   const [errors, setErrors] = useState({});
+  const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "password") calculatePasswordStrength(value);
+  };
+
+  const calculatePasswordStrength = (password) => {
+    let strength = 0;
+    if (password.length >= 6) strength += 1;
+    if (/[A-Z]/.test(password)) strength += 1;
+    if (/[0-9]/.test(password)) strength += 1;
+    if (/[\W]/.test(password)) strength += 1;
+    setPasswordStrength(strength);
   };
 
   const validate = () => {
     const newErrors = {};
-
-    if (!formData.name.trim()) newErrors.name = "Please enter your full name.";
-    if (!/\S+@\S+\.\S+/.test(formData.email))
-      newErrors.email = "Please enter a valid email.";
+    if (!formData.name.trim()) newErrors.name = "Full name is required.";
+    if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email.";
     if (!/^\d{9,15}$/.test(formData.number))
-      newErrors.number = "Enter a valid phone number (9–15 digits).";
+      newErrors.number = "Phone number must be 9-15 digits.";
     if (formData.password.length < 6)
       newErrors.password = "Password must be at least 6 characters.";
     if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords don’t match.";
-
+      newErrors.confirmPassword = "Passwords do not match.";
     return newErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newErrors = validate();
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-    } else {
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) setErrors(validationErrors);
+    else {
       setErrors({});
-      alert(`🎉 Welcome, ${formData.name}! Registration successful ✅`);
-      console.log("Form Data:", formData);
+      alert(`🎉 Welcome, ${formData.name}!`);
+      console.log(formData);
     }
   };
 
   return (
     <div className="form-container">
       <div className="form-card">
-        <h2 className="form-title">Create your account</h2>
-        <p className="form-subtitle">Fast, simple, secure.</p>
+        <h1 className="form-title">Create Your Account</h1>
+        <p className="form-subtitle">Fast, safe & modern experience 🚀</p>
 
-        <form onSubmit={handleSubmit} className="form">
+        <form className="form" onSubmit={handleSubmit}>
           {["name", "email", "number", "password", "confirmPassword"].map(
             (field) => (
               <div className="form-group" key={field}>
@@ -79,8 +83,14 @@ export default function RegistrationForm() {
                   onChange={handleChange}
                   className={`form-input ${errors[field] ? "error" : ""}`}
                 />
-                {errors[field] && (
-                  <p className="error-text">{errors[field]}</p>
+                {errors[field] && <span className="error-text">{errors[field]}</span>}
+
+                {field === "password" && formData.password && (
+                  <div className="password-strength">
+                    <div
+                      className={`strength-bar strength-${passwordStrength}`}
+                    ></div>
+                  </div>
                 )}
               </div>
             )
@@ -91,7 +101,7 @@ export default function RegistrationForm() {
           </button>
 
           <p className="form-footer">
-            Already have an account? <a href="#">Log In</a>
+            Already have an account? <a href="#">Log in</a>
           </p>
         </form>
       </div>
