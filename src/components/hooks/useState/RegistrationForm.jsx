@@ -10,17 +10,27 @@ export default function RegistrationForm() {
     confirmPassword: "",
     number: "",
   });
+  const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [darkMode, setDarkMode] = useState(
     window.matchMedia("(prefers-color-scheme: dark)").matches
   );
   const [showPassword, setShowPassword] = useState(false);
+  const [activeTab, setActiveTab] = useState("signup");
+  const [tiltStyle, setTiltStyle] = useState({});
+
+  // --- Handlers --- //
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (name === "password") calculatePasswordStrength(value);
+  };
+
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prev) => ({ ...prev, [name]: value }));
   };
 
   const calculatePasswordStrength = (password) => {
@@ -32,28 +42,36 @@ export default function RegistrationForm() {
     setPasswordStrength(strength);
   };
 
-  const validate = () => {
+  const validateRegister = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = "Full name is required.";
-    if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email.";
-    if (!/^\d{9,15}$/.test(formData.number))
-      newErrors.number = "Phone number must be 9-15 digits.";
-    if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters.";
+    if (!formData.name.trim()) newErrors.name = "Full name required";
+    if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email";
+    if (!/^\d{9,15}$/.test(formData.number)) newErrors.number = "Phone 9-15 digits";
+    if (formData.password.length < 6) newErrors.password = "Password min 6 chars";
     if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "Passwords do not match.";
+      newErrors.confirmPassword = "Passwords do not match";
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
+    const validationErrors = validateRegister();
     if (Object.keys(validationErrors).length > 0) setErrors(validationErrors);
     else {
       setErrors({});
       alert(`🎉 Welcome, ${formData.name}!`);
       console.log(formData);
     }
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    if (!loginData.email || !loginData.password) {
+      alert("Please enter email and password");
+      return;
+    }
+    alert(`✅ Logged in as ${loginData.email}`);
+    console.log(loginData);
   };
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
@@ -66,7 +84,6 @@ export default function RegistrationForm() {
     );
   }, [darkMode]);
 
-  const [tiltStyle, setTiltStyle] = useState({});
   const handleMouseMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -80,7 +97,12 @@ export default function RegistrationForm() {
       transform: `rotateY(${deltaX * 10}deg) rotateX(${-deltaY * 10}deg)`,
     });
   };
-  const handleMouseLeave = () => setTiltStyle({ transform: "rotateY(0deg) rotateX(0deg)" });
+
+  const handleMouseLeave = () => {
+    setTiltStyle({ transform: "rotateY(0deg) rotateX(0deg)" });
+  };
+
+  // --- Render --- //
 
   return (
     <div className="form-container">
@@ -97,60 +119,102 @@ export default function RegistrationForm() {
         onMouseLeave={handleMouseLeave}
         style={tiltStyle}
       >
-        <h1 className="form-title">Create Your Account</h1>
-        <p className="form-subtitle">Fast, secure, and beautiful experience 🚀</p>
-
-        <form className="form" onSubmit={handleSubmit}>
-          {["name", "email", "number"].map((field) => (
-            <div className="form-group" key={field}>
-              <input
-                type={field === "email" ? "email" : field === "number" ? "number" : "text"}
-                name={field}
-                value={formData[field]}
-                onChange={handleChange}
-                className={`form-input ${errors[field] ? "error" : ""}`}
-                placeholder=" "
-              />
-              <label className="floating-label">
-                {field.charAt(0).toUpperCase() + field.slice(1)}
-              </label>
-              {errors[field] && <span className="error-text">{errors[field]}</span>}
-            </div>
-          ))}
-
-          {["password", "confirmPassword"].map((field) => (
-            <div className="form-group password-group" key={field}>
-              <input
-                type={field === "password" ? (showPassword ? "text" : "password") : "password"}
-                name={field}
-                value={formData[field]}
-                onChange={handleChange}
-                className={`form-input ${errors[field] ? "error" : ""}`}
-                placeholder=" "
-              />
-              <label className="floating-label">
-                {field === "confirmPassword" ? "Confirm Password" : "Password"}
-              </label>
-              <span className="password-toggle" onClick={toggleShowPassword}>
-                {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
-              </span>
-              {errors[field] && <span className="error-text">{errors[field]}</span>}
-              {field === "password" && formData.password && (
-                <div className="password-strength">
-                  <div className={`strength-bar strength-${passwordStrength}`}></div>
-                </div>
-              )}
-            </div>
-          ))}
-
-          <button type="submit" className="form-button">
+        {/* --- Sliding Tab Toggle --- */}
+        <div className="tab-toggle">
+          <span
+            className={`tab ${activeTab === "signup" ? "active-tab" : ""}`}
+            onClick={() => setActiveTab("signup")}
+          >
             Sign Up
-          </button>
+          </span>
+          <span
+            className={`tab ${activeTab === "login" ? "active-tab" : ""}`}
+            onClick={() => setActiveTab("login")}
+          >
+            Login
+          </span>
+          <div
+            className={`tab-slider ${activeTab === "signup" ? "slide-left" : "slide-right"}`}
+          ></div>
+        </div>
 
-          <p className="form-footer">
-            Already have an account? <a href="#">Log in</a>
-          </p>
-        </form>
+        {activeTab === "signup" ? (
+          <>
+            <h1 className="form-title">Create Your Account</h1>
+            <p className="form-subtitle">Fast, secure, and beautiful experience 🚀</p>
+            <form className="form" onSubmit={handleRegisterSubmit}>
+              {["name", "email", "number"].map((field) => (
+                <div className="form-group" key={field}>
+                  <input
+                    type={field === "email" ? "email" : field === "number" ? "number" : "text"}
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className={`form-input ${errors[field] ? "error" : ""}`}
+                    placeholder=" "
+                  />
+                  <label className="floating-label">
+                    {field.charAt(0).toUpperCase() + field.slice(1)}
+                  </label>
+                  {errors[field] && <span className="error-text">{errors[field]}</span>}
+                </div>
+              ))}
+
+              {["password", "confirmPassword"].map((field) => (
+                <div className="form-group password-group" key={field}>
+                  <input
+                    type={field === "password" ? (showPassword ? "text" : "password") : "password"}
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className={`form-input ${errors[field] ? "error" : ""}`}
+                    placeholder=" "
+                  />
+                  <label className="floating-label">
+                    {field === "confirmPassword" ? "Confirm Password" : "Password"}
+                  </label>
+                  <span className="password-toggle" onClick={toggleShowPassword}>
+                    {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                  </span>
+                  {errors[field] && <span className="error-text">{errors[field]}</span>}
+                  {field === "password" && formData.password && (
+                    <div className="password-strength">
+                      <div className={`strength-bar strength-${passwordStrength}`}></div>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              <button type="submit" className="form-button">Sign Up</button>
+            </form>
+          </>
+        ) : (
+          <>
+            <h1 className="form-title">Welcome Back</h1>
+            <p className="form-subtitle">Enter your credentials to login</p>
+            <form className="form" onSubmit={handleLoginSubmit}>
+              {["email", "password"].map((field) => (
+                <div className="form-group password-group" key={field}>
+                  <input
+                    type={field === "password" ? (showPassword ? "text" : "password") : "email"}
+                    name={field}
+                    value={loginData[field]}
+                    onChange={handleLoginChange}
+                    className="form-input"
+                    placeholder=" "
+                  />
+                  <label className="floating-label">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                  {field === "password" && (
+                    <span className="password-toggle" onClick={toggleShowPassword}>
+                      {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                    </span>
+                  )}
+                </div>
+              ))}
+              <button type="submit" className="form-button">Login</button>
+            </form>
+          </>
+        )}
       </div>
     </div>
   );

@@ -50,7 +50,6 @@ body::before {
   animation: gradientBG 20s ease infinite;
   z-index: -1;
 }
-
 @keyframes gradientBG {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -76,51 +75,12 @@ body::before {
   right: 1rem;
   z-index: 10;
 }
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 28px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  background-color: #ccc;
-  border-radius: 34px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 20px;
-  width: 20px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  border-radius: 50%;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: var(--primary);
-}
-
-input:checked + .slider:before {
-  transform: translateX(22px);
-}
+.switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; background-color: #ccc; border-radius: 34px; top: 0; left: 0; right: 0; bottom: 0; transition: 0.4s; }
+.slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: 0.4s; }
+input:checked + .slider { background-color: var(--primary); }
+input:checked + .slider:before { transform: translateX(22px); }
 
 /* === Card === */
 .form-card {
@@ -137,31 +97,14 @@ input:checked + .slider:before {
 }
 
 /* === Titles === */
-.form-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  text-align: center;
-}
-
-.form-subtitle {
-  font-size: 1.1rem;
-  text-align: center;
-  color: #6b7280;
-  margin-bottom: 2rem;
-}
+.form-title { font-size: 2.2rem; font-weight: 700; text-align: center; }
+.form-subtitle { font-size: 1.1rem; text-align: center; color: #6b7280; margin-bottom: 2rem; }
 
 /* === Form === */
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-}
+.form { display: flex; flex-direction: column; gap: 1.75rem; }
 
 /* === Floating Label Inputs === */
-.form-group {
-  position: relative;
-}
-
+.form-group { position: relative; }
 .form-input {
   width: 100%;
   padding: 1.25rem 1rem;
@@ -171,13 +114,7 @@ input:checked + .slider:before {
   font-size: 1.05rem;
   transition: all 0.3s ease;
 }
-
-.form-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
-}
-
+.form-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2); }
 .floating-label {
   position: absolute;
   top: 50%;
@@ -187,7 +124,6 @@ input:checked + .slider:before {
   pointer-events: none;
   transition: all 0.3s ease;
 }
-
 .form-input:focus + .floating-label,
 .form-input:not(:placeholder-shown) + .floating-label {
   top: -10px;
@@ -199,43 +135,15 @@ input:checked + .slider:before {
 }
 
 /* === Password Toggle === */
-.password-group {
-  position: relative;
-}
-
-.password-toggle {
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: #6b7280;
-}
+.password-group { position: relative; }
+.password-toggle { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; cursor: pointer; color: #6b7280; }
 
 /* === Error === */
-.error-text {
-  font-size: 0.85rem;
-  color: var(--error);
-  margin-top: 4px;
-}
+.error-text { font-size: 0.85rem; color: var(--error); margin-top: 4px; }
 
 /* === Password Strength === */
-.password-strength {
-  margin-top: 0.25rem;
-  height: 6px;
-  border-radius: 4px;
-  background: #e5e7eb;
-  overflow: hidden;
-}
-
-.strength-bar {
-  height: 100%;
-  width: 0%;
-  border-radius: 4px;
-  transition: width 0.3s ease;
-}
-
+.password-strength { margin-top: 0.25rem; height: 6px; border-radius: 4px; background: #e5e7eb; overflow: hidden; }
+.strength-bar { height: 100%; width: 0%; border-radius: 4px; transition: width 0.3s ease; }
 .strength-1 { width: 25%; background: #ef4444; }
 .strength-2 { width: 50%; background: #f59e0b; }
 .strength-3 { width: 75%; background: #facc15; }
@@ -253,35 +161,42 @@ input:checked + .slider:before {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+.form-button:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4); }
 
-.form-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
+/* === Sliding Tab Toggle === */
+.tab-toggle {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.1);
+  border-radius: 9999px;
+  padding: 6px;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
 }
-
-/* === Footer === */
-.form-footer {
-  text-align: center;
-  margin-top: 1.2rem;
-  font-size: 1rem;
-  color: #6b7280;
+.tab { flex: 1; text-align: center; padding: 0.75rem 0; font-weight: 700; font-size: 1.05rem; z-index: 1; color: #9ca3af; transition: all 0.35s ease; }
+.tab:hover { color: white; }
+.active-tab { color: white; }
+.tab-slider {
+  position: absolute; top: 0; bottom: 0; width: 50%; border-radius: 9999px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8, #f43f5e, #facc15);
+  background-size: 400% 400%;
+  animation: gradientSlide 6s ease infinite;
+  transition: all 0.35s ease;
+  z-index: 0;
 }
-
-.form-footer a {
-  color: var(--primary);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.form-footer a:hover {
-  text-decoration: underline;
-}
+.slide-left { left: 0; }
+.slide-right { left: 50%; }
+@keyframes gradientSlide { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
 /* === Animations === */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
 /* === Responsive === */
 @media (max-width: 480px) {
