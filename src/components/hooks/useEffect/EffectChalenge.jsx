@@ -7,6 +7,14 @@ export const Challenge = () => {
 
   return (
     <div className="challenge-wrapper">
+      {/* Floating Background Shapes */}
+      <div className="floating-shapes">
+        <span className="shape circle"></span>
+        <span className="shape blob"></span>
+        <span className="shape star"></span>
+      </div>
+
+      {/* Main Card */}
       <div className="challenge-card">
         <h1>🌟 UseEffect Challenge</h1>
 
