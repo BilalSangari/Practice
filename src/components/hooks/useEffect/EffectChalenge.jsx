@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 
 export const Challenge = () => {
   const [count, setCount] = useState(0);
   const [name, setName] = useState("");
+
+  useEffect(() => {
+    document.title = `Name: ${name}`;
+  },[name])
 
   return (
     <div className="challenge-wrapper">
