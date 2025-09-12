@@ -1,12 +1,10 @@
-// import RegistrationForm from "./components/hooks/useState/RegistrationForm";
-
-import { ContactForm } from "./components/hooks/useState/ContactForm";
-
+import { Challenge } from "./components/hooks/useEffect/EffectChalenge";
+import Counter from "./components/hooks/useState/Counter";
 
 const App = () => {
   return <>
-    {/* <RegistrationForm /> */}
-    <ContactForm />
+    <Challenge />
+    {/* <Counter /> */}
   </>;
 };
 
