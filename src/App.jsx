@@ -1,10 +1,9 @@
-import { Challenge } from "./components/hooks/useEffect/EffectChalenge";
-import Counter from "./components/hooks/useState/Counter";
+import { HowNotToFetchApi } from "./components/hooks/useEffect/howNotToFetchApi";
+
 
 const App = () => {
   return <>
-    <Challenge />
-    {/* <Counter /> */}
+    <HowNotToFetchApi />
   </>;
 };
 
